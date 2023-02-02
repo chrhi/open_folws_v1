@@ -1,9 +1,16 @@
 import { create } from 'zustand'
-import { getAuth  , createUserWithEmailAndPassword , signInWithEmailAndPassword , signOut } from "firebase/auth";
+import { getAuth  , createUserWithEmailAndPassword ,
+   signInWithEmailAndPassword , signOut , GoogleAuthProvider , getRedirectResult, 
+   signInWithRedirect
+  } from "firebase/auth";
 import {app} from "../../config/firebase"
 import Cookies from 'js-cookie';
 
 const auth = getAuth(app)
+
+const provider = new GoogleAuthProvider()
+
+
 type User = {
     id:string | number ,
     name : string ,
@@ -38,6 +45,29 @@ export const useAuthAbdullah = create((set) => ({
         set({ user: {}})
         Cookies.remove('auth');
     },
+
+    googleProvider :  () =>{
+      signInWithRedirect(auth, provider);
+      getRedirectResult(auth)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result!);
+    const token = credential?.accessToken;
+   // Cookies.set('auth', result?.user.uid! );
+    // The signed-in user info.
+    const user = result?.user;
+    console.log(result)
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+    }
         
   })
   

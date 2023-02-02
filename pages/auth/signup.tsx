@@ -8,6 +8,8 @@ function signup() {
   //out custom hook
   // @ts-ignore
   const create_user = useAuthAbdullah((state) => state?.create_user)
+    // @ts-ignore
+  const googleProvider = useAuthAbdullah((state) => state?.googleProvider )
 
   //these variabes are going to hold the value of each input
   const [user_name , set_user_name ] = useState<string | undefined>()
@@ -33,14 +35,19 @@ function signup() {
       <form onSubmit={(event:FormEvent) => handle_submit(event)}>
         {/* @ts-ignore */}
         <input type="text" onChange={(event :FormEvent) => set_user_name ( prev => event.target.value)} />
-         {/* @ts-ignore */}
+        
          <label >email</label>
+          {/* @ts-ignore */}
         <input type="email"  onChange={(event :FormEvent) => set_email ( prev => event.target.value)} />
-         {/* @ts-ignore */}
+        
          <label >password</label>
+          {/* @ts-ignore */}
         <input type="password"  onChange={(event :FormEvent) => set_password ( prev => event.target.value)} />
         <button >submit</button>
       </form>
+      <button className='bg-sky-600 text-white' onClick={ googleProvider}>
+        google
+      </button>
     </div>
   )
 }

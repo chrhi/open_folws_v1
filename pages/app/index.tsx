@@ -1,8 +1,15 @@
 import React from 'react'
+import Header from '@/components/shared/Header'
+import Page from '@/components/layouts/Page'
 
 function index() {
   return (
-    <div>this is the protected route</div>
+   <>
+   <Header />
+   <Page>
+    <h1>hellow wordl</h1>
+   </Page>
+   </>
   )
 }
 
